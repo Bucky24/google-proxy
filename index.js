@@ -58,8 +58,8 @@ app.get('/o/oauth2/auth', (req, res) => {
 app.post('/o/oauth2/token', (req, res) => {
     console.log('got request for token');
     const token = jwt.sign({
-        hd: 'slack-corp.com',
-        email: 'rwijtman2@slack-corp.com',
+        hd: '<your domain here>',
+        email: '<your email here>',
         email_verified: 'true',
     }, options.key.toString(), {
         //algorithm: 'RS256',
