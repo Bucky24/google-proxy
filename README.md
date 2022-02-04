@@ -12,11 +12,7 @@ Start the server with
 
 KEY=./cert/localhost-key.pem CERT=./cert/localhost.pem npm start
 
-Start ngrok:
-
-ngrok http 443
-
-Change the places that you use google auth to point to ngrok instead of google.
+Change the places that you use google auth to point to localhost instead of google.
 
 You should be replacing calls to accounts.google.com and https://www.googleapis.com/oauth2/v1/certs
 
