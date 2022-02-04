@@ -20,4 +20,4 @@ Change the places that you use google auth to point to ngrok instead of google.
 
 You should be replacing calls to accounts.google.com and https://www.googleapis.com/oauth2/v1/certs
 
-Now as long as your using the dev env, slack will use your local server instead of google auth.
+Now your code will use your local server instead of google auth.
