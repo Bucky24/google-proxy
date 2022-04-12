@@ -4,13 +4,14 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 
 const app = express();
-const port = 443;
 
-const key = process.env.KEY;
-const cert = process.env.CERT;
+const key = process.argv[2];
+const cert = process.argv[3];
+const port = process.argv[4];
 
-if (!key || !cert) {
-    console.log("Program requires the KEY and CERT env variables to be set");
+if (!key || !cert || !port) {
+    console.log("Program requires the KEY and CERT and port variables to be passed");
+    console.log(process.argv[1] + " <key file> <cert file> <port>");
     process.exit(1);
 }
 
