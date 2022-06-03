@@ -11,7 +11,7 @@ const port = process.env.PORT;
 const domain = process.env.DOMAIN;
 const email = process.env.EMAIL;
 
-if (!key || !cert || !port) {
+if (!key || !cert) {
     console.log("Program requires the KEY_FILE and CERT_FILE env variables to be set");
     process.exit(1);
 }
