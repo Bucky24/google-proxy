@@ -27,6 +27,7 @@ app.get("/", (req, res) => {
     res.end();
 });
 
+// v1 routes
 app.get('/o/oauth2/auth', (req, res) => {
     console.log('got request for auth');
     //console.log(req.query);
@@ -81,10 +82,69 @@ app.post('/o/oauth2/token', (req, res) => {
     }));
 });
 
+
 app.get('/oauth2/v1/certs', (req, res) => {
     console.log('got request for certs');
     res.send(JSON.stringify({
         '12345': options.cert.toString(),
+    }));
+});
+
+// v2 routes
+app.get('/o/oauth2/v2/auth', (req, res) => {
+    console.log('got request for auth');
+    //console.log(req.query);
+    
+    const redirect = req.query.redirect_uri;
+    
+    const scope = req.query.scope;
+    
+    const newScope = scope + 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+    
+    let code = 'abadcode';
+    
+    const params = {
+        state: req.query.state,
+        hd: req.query.hd,
+        scope: newScope,
+        code,
+    };
+    
+    const urlList = Object.keys(params).map((key) => {
+        let value = encodeURIComponent(params[key]);
+        value = value.replace(/ /g, "+");
+        
+        return `${key}=${value}`;
+    });
+    
+    const paramString = urlList.join("&");
+    
+    const resultUrl = redirect + "?" + paramString;
+    
+    // redirect
+    res.status(302);
+    res.set("Location", resultUrl);
+    res.end();
+});
+
+app.post('/token', (req, res) => {
+    console.log('got request for token');
+    const token = jwt.sign({
+        hd: domain || 'sampledomain.com',
+        email: email || 'test@sampledomain.com',
+        email_verified: 'true',
+    }, options.key.toString(), {
+        //algorithm: 'RS256',
+        header: {
+            alg: 'RS256',
+            kid: '12345',
+        },
+    });
+    res.send(JSON.stringify({
+        'access_token': '1234',
+        'id_token': token,
+        'expires_in': 100000,
+        'token_type': 'access_token',
     }));
 });
 
